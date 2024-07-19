@@ -50,17 +50,14 @@ This is my documentation for how I understand microservice it's not a holy book 
         - use this wisely to avoid reverse effect.
 ## What set of problems should we consider microservices :
   #### Avoid developers-production toxic relationship :
-    no more projects ==> talking about products you build your product you deploy it.
+    - no more projects ==> talking about products you build your product you deploy it.
   #### Enterprise-service-bus only used as dump pipes no logic:
-    its safe to ignore and convert you service-oriented to microservices
-  #### Enterprise service-bus uses logic:
-    requires consideration (tight coupling issue)
-    - why: information that is included in the service-bus is really part of the bounded context and you re violating that bounded context phylosofy of micro services by trying to take some of that contexts , externalizing it in an other moving part when we re trying to break the coupling between the moving part in the architecture here to create the shared "nothing kind of architecture"
+    - its safe to ignore and convert you service-oriented to microservices
   #### microservices avoid service buses:
     - Modern microservice architectures generally recommend avoiding ESBs because they can introduce tight coupling and become bottlenecks. Smart endpoints and dumb pipes (simple communication mechanisms like HTTP or messaging) are preferred.
   
 ## When to avoid considering microservices :
   #### Enterprise service-bus uses logic:
-    requires consideration (tight coupling issue)
+    - requires consideration (tight coupling issue)
     - why: information that is included in the service-bus is really part of the bounded context and you re violating that bounded context phylosofy of micro services by trying to take some of that contexts , externalizing it in an other moving part when we re trying to break the coupling between the moving part in the architecture here to create the shared "nothing kind of architecture".
     
