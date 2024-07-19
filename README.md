@@ -34,7 +34,7 @@ This is my documentation for how I understand microservice it's not a holy book 
         - AKA ( the Façade pattern )
         - very similar to "isolated failure", but this time the focus is on protecting our system from external dependencies that change frequently.
         - How:
-          - Microservices can act as <bold>a layer of indirection<bold> 
+          - Microservices can act as <b>a layer of indirection</b> 
     - **6-**
 ## What set of problems should we consider microservices :
   #### Avoid developers-production toxic relationship :
