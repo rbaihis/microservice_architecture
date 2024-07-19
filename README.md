@@ -11,8 +11,8 @@ This is my documentation for how I understand microservice it's not a holy book 
     - Hybrid systems can be cost-effective, They should still be carefully evaluated for potential integration and complexity issues.
 
 ## Statements in my opinion are not 100% correct:
-  - **each microservice should have its own database** :
-    * ==> <b>Each bounded context should have its own database, not necessarily each microservice.</b>
+  - **Each microservice should have its own database** :
+    + ==> `Each bounded context should have its own database`, not necessarily each microservice.</b>
 
 ## A bounded context is not equivalent to a microservice:
   - ## ## Review on Bounded Context: 
