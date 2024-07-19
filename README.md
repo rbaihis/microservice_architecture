@@ -10,6 +10,10 @@ This is my documentation for how I understand microservice it's not a holy book 
   - Note:
     - Hybrid systems can be cost-effective, They should still be carefully evaluated for potential integration and complexity issues.
 
+## Statements in my opinion are not 100% correct:
+  - **each microservice should have its own database** :
+    ==> <b>Each bounded context should have its own database, not necessarily each microservice.</b>
+
 ## A bounded context is not equivalent to a microservice:
   - ## ## Review on Bounded Context: 
     - A bounded context in Domain-Driven Design (DDD) is a logical boundary, while a microservice is a physical deployment unit. Although they often align, they are not the same.
