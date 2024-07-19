@@ -3,11 +3,16 @@ This is my documentation for how I understand microservice it's not a holy book 
 
 ## what is a microservice:
   - is a physically deployable piece of software.
+  - microservice is independent, loosely coupled, and focused on single functionalities or business capabilities.
 
 ## Rule  of thumb:
-  - It is fine to have a hybrid (mono-microservice) system, where the monolithic modules do not meet the need for microservice architecting and are better kept monolithic for minimizing costs.
+  - It is fine to have a hybrid (mono-microservice) system, where some modules remain monolithic to minimize costs when they do not benefit significantly from being split into microservices.
+  - Note:
+    - Hybrid systems can be cost-effective, They should still be carefully evaluated for potential integration and complexity issues.
 
 ## A bounded context is not equivalent to a microservice:
+  - ## ## Review on Bounded Context: 
+    - A bounded context in Domain-Driven Design (DDD) is a logical boundary, while a microservice is a physical deployment unit. Although they often align, they are not the same.
   - ## In many cases : 
     - one bounding context => implemented as exactly one microservice.
   - ## Splitting a bounding Context (common as well):
@@ -34,8 +39,15 @@ This is my documentation for how I understand microservice it's not a holy book 
         - AKA ( the Façade pattern )
         - very similar to "isolated failure", but this time the focus is on protecting our system from external dependencies that change frequently.
         - How:
-          - Microservices can act as <b>a layer of indirection</b> 
-    - **6-**
+          - Microservices can act as <b>a layer of indirection</b> to insulate you from a third-party dependency. Rather than directly calling the dependency, we can instead place an abstraction layer (that we control) in between the core app and the dependency. Further, we can build this layer so it’s easy for our application to consume, hiding the complexity of the dependency. If things change in the future—and you have to migrate—your changes are just limited to the façade, rather than having to do a larger refactoring.
+    - **6-right tech for the job** :
+      - Better to keep this to a minimum and only use it when required.
+      - Teams should only use reliable technology with long-lasting support not just cool stuff that they want to try (google have 40000-engineers and only uses 8-languages).
+      - ex :
+        - keeping a reliable legacy system wile adding on the new microservice with a better technology.
+        - using Python for IA and data science tasks, java for critical apps, and C++/Rust for low-level solutions.
+        - if you have a team of 6-engineers, it is better to stick to one technology.
+        - use this wisely to avoid reverse effect.
 ## What set of problems should we consider microservices :
   #### Avoid developers-production toxic relationship :
     no more projects ==> talking about products you build your product you deploy it.
@@ -45,7 +57,7 @@ This is my documentation for how I understand microservice it's not a holy book 
     requires consideration (tight coupling issue)
     - why: information that is included in the service-bus is really part of the bounded context and you re violating that bounded context phylosofy of micro services by trying to take some of that contexts , externalizing it in an other moving part when we re trying to break the coupling between the moving part in the architecture here to create the shared "nothing kind of architecture"
   #### microservices avoid service buses:
-    instead: smart endpoints,Dump pipes => commonly (HTTP/Messaging)
+    - Modern microservice architectures generally recommend avoiding ESBs because they can introduce tight coupling and become bottlenecks. Smart endpoints and dumb pipes (simple communication mechanisms like HTTP or messaging) are preferred.
   
 ## When to avoid considering microservices :
   #### Enterprise service-bus uses logic:
