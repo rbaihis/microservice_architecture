@@ -32,9 +32,9 @@ I have attached my documentation for how I understand microservice it's not a ho
     - why: because your system will definitely grow since you decided to use microservices architecture in the first place unless you have made the wrong choice. and there is no clear view of the system is future solution because is still young and evolving. Using a <b>mono-repositor</b>y can be beneficial. It simplifies the initial development and integration process. As the system grows and matures, having all the microservices in a single repository can make refactoring and architectural changes easier.
 
 ## Statements about ms, not 100% correct:
-  - **Each microservice should have its own database** :
+  - **Each microservice should have its own database** :(Partially True)
     + ==> `Each bounded context should have its own database`, not necessarily each microservice.</b>
-  - **Data Consistency matters 100%**:
+  - **Data Consistency matters 100%**:(Partially True)
     - No sometimes data consistency does not matter and better to avoid it to not over complex your microservices.
     - only use it when it matters most :
       - Ex (when it does not matter ): you are collecting data for analytics or forecasting losing a few data will not matter.
