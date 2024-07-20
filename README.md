@@ -9,10 +9,19 @@ This is my documentation for how I understand microservice it's not a holy book 
   - It is fine to have a hybrid (mono-microservice) system, where some modules remain monolithic to minimize costs when they do not benefit significantly from being split into microservices.
   - Note:
     - Hybrid systems can be cost-effective, They should still be carefully evaluated for potential integration and complexity issues.
+  - you can't excel in microservice architecture if you don't understand Domain driven architecture , DDD helps in identifying and defining bounded contexts, which are foundational for effective microservice decomposition.
+  - Architecting GreenField project :
+    - Since the system is expected to grow and evolve, starting with a monorepository can facilitate easier restructuring and rearchitecting without significant overhead.
+    - why: because ur system will difenetly grow since u decided its a should be ms in the first place. and there is no clear view about the system since its still fresh. Using a <b>monorepositor</b>y can be beneficial. It simplifies the initial development and integration process. As the system grows and matures, having all the microservices in a single repository can make refactoring and architectural changes easier.
 
 ## Statements about ms not 100% correct:
   - **Each microservice should have its own database** :
     + ==> `Each bounded context should have its own database`, not necessarily each microservice.</b>
+  - **Data Consistency matters 100%**:
+    - No sometimes data consistency does not matter and better to avoid it to not over complex your microservices .
+    - only use it when it matters most :
+      - Ex (when it does not matter ): you are collecting data for analytics or forecasting loosing few data will not matters .
+      - Ex (when it matters ): accounting, banking, finance, orders, payment , database recovery logging , etc ... 
 
 ## A bounded context is not equivalent to a microservice:
   - ## ## Review on Bounded Context: 
@@ -64,4 +73,9 @@ This is my documentation for how I understand microservice it's not a holy book 
   - #### Enterprise service-bus uses logic:
     - requires consideration (tight coupling issue)
     - why: information that is included in the service-bus is really part of the bounded context and you re violating that bounded context phylosofy of micro services by trying to take some of that contexts , externalizing it in an other moving part when we re trying to break the coupling between the moving part in the architecture here to create the shared "nothing kind of architecture".
+
+
+
+## Data consistency is difficult in Ms-Architecture :
+  - achieving data consistency in micro service is quite complex, it requires a careful though 
     
