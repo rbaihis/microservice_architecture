@@ -21,7 +21,35 @@ I have attached my documentation for how I understand microservice it's not a ho
 
 ## Real Benefits of this style of architecture : 
   - better to keep those in mind to not end up with a microservice architecture with no benefits:
-    - 
+    - Asynchronicity:
+      - for user experience :
+        - Prefer timely partial over slow complete
+      - return optimized complete:
+        - for ranking/aggregation, not-display-end-user-consumer .  optimized complete data for ranking or aggregation is important for backend processes, but not necessarily for end-user display, where timely partial results might be preferred for better user experience.
+    -  Super-Star-Benefit:<br>
+     not like monolithic(risk of release is binary) having the right engineering practices in place, a large the number of services you have, you drive your risk of release down below. how?!  in the example below . 
+      - Evolutionary Architecture of MS:
+        - Solving complect(when u release component --> release feature to users at same time) Deployment:
+          - Challenge :
+            - Deploying a new component and releasing its features simultaneously can be risky and complex.
+            - this takes more risk then necessary .
+          - solution :
+            - separate these 2 things :
+                - deploy things and make sure they work operationally correctly and turn on features later, then you are incurring less risk doing that.
+                - how this happens in MS :
+                  - component are deployed into the production ecosystem very frequently --> continuously deployed(here comes the DevOps pipelines).
+                  - MS deployed still has no impact yet because features are still inside it and at some point of time later you can expose its feature by turning on feature toggles.
+                  - run new MS with almost identical capabilities with the currently in-use MS side by side , but still not impacted users yet by chosing the routing.
+                  - doing that `enables do things like A/B testing` by routing for example 20% of users to this new feature
+                  - also other services that needs that capability can `slowly migrate to the new enhanced version`
+                  - `disintegration of old service` when all users/services are migrated to the new one thx to (operations and DevOps that lets us know when no one is routing to the old ms)
+## Engineering Practices Necessary For This Architecture to Work: 
+  - ### Design for Failure:
+    -
+  - ### Monitoring:
+  - ### Aggregations Monitors:
+  - ### Synthetic Transaction:
+
 ## Rule  of thumb:
   - It is fine to have a hybrid (mono-microservice) system, where some modules remain monolithic to minimize costs when they do not benefit significantly from being split into microservices.
   - Note:
