@@ -21,12 +21,12 @@ I have attached my documentation for how I understand microservice it's not a ho
 
 ## Real Benefits of this style of architecture : 
   - better to keep those in mind to not end up with a microservice architecture with no benefits:
-    - Asynchronicity:
+    - ### Asynchronicity:
       - for user experience :
         - Prefer timely partial over slow complete
       - return optimized complete:
         - for ranking/aggregation, not-display-end-user-consumer .  optimized complete data for ranking or aggregation is important for backend processes, but not necessarily for end-user display, where timely partial results might be preferred for better user experience.
-    -  Super-Star-Benefit:<br>
+    -  ### Business-Real-Benefit:<br>
      not like monolithic(risk of release is binary) having the right engineering practices in place, a large the number of services you have, you drive your risk of release down below. how?!  in the example below . 
       - Evolutionary Architecture of MS:
         - Solving complect(when u release component --> release feature to users at same time) Deployment:
