@@ -75,6 +75,8 @@ I have attached my documentation for how I understand microservice it's not a ho
     - in a business if you have 90% availability you're dead availability=uptime/total_time= meanTimeToFailure/(meanTimeToRecovery+meanTimeToFailure).
   - **why will fuck you up ?**:
     - 
+
+
 ## A bounded context is not equivalent to a microservice:
   - ## ## Review on Bounded Context: 
     - A bounded context in Domain-Driven Design (DDD) is a logical boundary, while a microservice is a physical deployment unit. Although they often align, they are not the same.
