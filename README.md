@@ -68,6 +68,13 @@ I have attached my documentation for how I understand microservice it's not a ho
       - Ex (when it does not matter ): you are collecting data for analytics or forecasting losing a few data will not matter.
       - Ex (when it matters ): accounting, banking, finance, orders, payment, database recovery logging, etc ... 
 
+
+## REST only as Communication (will fuck u up):
+  - **must Know first** :
+    - a distributed system is one in which the failure of a computer you didn't even know existed can render your own computer unusable.
+    - in a business if you have 90% availability you're dead availability=uptime/total_time= meanTimeToFailure/(meanTimeToRecovery+meanTimeToFailure).
+  - **why will fuck you up ?**:
+    - 
 ## A bounded context is not equivalent to a microservice:
   - ## ## Review on Bounded Context: 
     - A bounded context in Domain-Driven Design (DDD) is a logical boundary, while a microservice is a physical deployment unit. Although they often align, they are not the same.
