@@ -78,7 +78,7 @@ I have attached my documentation for how I understand microservice it's not a ho
     - ex:
       - separating: online services from housekeeping jobs that are running periodically.
         
-## Ask yourself :
+## Microservice is it needed. Ask yourself :
   - ### Should that be a microservice:
     - **1- Multiple rates of change**:
         - Do parts of your system need to evolve at different speeds or in different directions? I(yes=> ms)
@@ -109,8 +109,17 @@ I have attached my documentation for how I understand microservice it's not a ho
 ## What set of problems should we consider microservices :
   - ### Maximize Easy-Evolution at the Architecture Level:
     - One of the unique things that ms-architecture gives you is  the idea of being able to maximize `easy evolution at the architecture level` it's like Lego-ability by taking one microservice to replace it with another microservice and no one notices that that happens. ( This is always true  if the feature is also present in the frontend and the frontend is as well a plugin-style or microservices style or the MS is a backend-and-not-frontend-related).
+  - ### Make sure To avoid a single point of failure :
+    - you may build a microservice but it actually have a single point of failure or in an other world a single distributed point of failure ex: an apigateway may fail if one of your service have a long timeout policy and the gateway exhaust its all resources or you will scale unnecessarely .
+    - make sure your domain business is really independent where its decoupled in a way where our most basic use cases that have a direct relationship with consumers are absolutely decoupled and handle failure gracefully and are not down because of aggregation relation with other microservices.
   - #### Avoid developers-production toxic relationship :
     - no more projects ==> talking about products you build your product you deploy it.
+  - ### Data consistency is difficult in Ms-Architecture :
+    - **ACID nature in Monolothic is not the same in microservices**:
+      - must consider how to deal with your distributed transactions in case of aggregation.
+      - your ACID transaction nature will only work for local databases.
+      - must consider that most databases are not thread if multiple services have write access to it.
+    - it's possible to write to a database and make another service tightly related read from db, but this will make the other microservice tightly coupled to your db schema and naming. You better get data from API requests or messaging if you're not in a hurry and async is ok.
   - #### Enterprise-service-bus only used as dump pipes no logic:
     - It is safe to ignore and convert your service-oriented to microservices
   - #### microservices avoid service buses:
@@ -119,10 +128,34 @@ I have attached my documentation for how I understand microservice it's not a ho
 ## When to avoid considering microservices :
   - #### Enterprise service-bus uses logic:
     - requires consideration (tight coupling issue)
-    - why: information that is included in the service-bus is really part of the bounded context and you re violating that bounded context philosophy of microservices by trying to take some of that context, and externalizing it in another moving part when we're trying to break the coupling between the moving part in the architecture here to create the shared "nothing kind of architecture".
+    - why: information that is included in the service-bus is really part of the bounded context and you're violating that bounded context philosophy of microservices by trying to take some of that context, and externalizing it in another moving part when we're trying to break the coupling between the moving part in the architecture here to create the shared "nothing kind of architecture".
 
-
-
+## Principals Of Microservices:
+  - ### Modelled around Business Domain:
+    - modeling things around business domain leads to creating services that have more stable APIs-boundaries.
+    - It is easier to reuse them in different ways for different user interfaces.
+    - makes teams that own them not only experts in the domain business themselves, but also the service ownership.
+    - avoids lots of cross-cutting changes.
+  - ### Culture of automation :
+    - embracing a culture of automation is key to allowing you to manage all these multiple different services that are flying around  (manual microservices are unmanageable after a few microservices)
+  - ### Hiding Implementation Details :
+    - this is very essential if you want to evolve the internal of one service  without breaking others (related to the idea above of  creating services that have more stable APIs-boundaries).
+  - ### Decentralise All the Things(avoids middleware):
+    - avoids smart middleware(use dump-pipes & smart-endpoints only  ) see if u can push decision-making into your team , lower the barriers to entries for teams to look after and manage things themselves .
+  - ### Deploy things Independently(Golden-Rule):
+    - this is what u need to aim for .
+    - you need to be able to make a change to a service and deploy it into production in isolation of everything else ==> if you can do that reliably then you're in a very good place.
+  - ### Consumer-First (end-users b2c|b2b comes first):
+    - place your consumer first, it's a very soft thing and services exist to be called so `think outside in`. solutions are built for customers not for developers to enjoy doing what is convenient for them. 
+  - ### Isolate Failure (Critical):
+    - Make sure you understand where the sources of failure are.
+    - Every single communication between one service and an other is a `potential place where something can go wrong` ==> Plan for that , understand it , and know what you re going to do about it as a result.
+  - ### Build Systems to be Observable(Critical):
+    - Make sure to build your system to be observable .
+    - Logs are very important and monitoring is so hard in Monolithic and almost impossible in microservices so make sure to do the necessary to make it possible.
+    - building things like correlation-IDs, and aggregating stuff in a consistent and standard way is very important for debugging to be possible-easier and tracking to have meaning.
+    - A microservice without proper monitoring is lost in a microservice architecture since it is untrackable when the solution becomes complex.
+    
 ## Data consistency is difficult in Ms-Architecture :
   - achieving data consistency in microservice is quite complex, it requires a careful though 
     
