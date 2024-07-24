@@ -6,5 +6,5 @@
 
 ## If your system can't withstand production you're doomed:
   * if your business idea can't be mapped into a system available at least 99% then the system we built is useless. customers will run away.
-  * $availability =\frac{\text{upTime}/\text{total_time}} =  \frac{\bar{\text{meanTimeToFailure}}}{\bar{\text{meanTimeToFailure}} + \bar{\text{meanTimeToRecovery}}}$
+  * $availability =\frac{\text{upTime}/\text{totalTime}} =  \frac{\bar{\text{meanTimeToFailure}}}{\bar{\text{meanTimeToFailure}} + \bar{\text{meanTimeToRecovery}}}$
 
