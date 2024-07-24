@@ -53,7 +53,7 @@ ___
 ### Introducing Boundaries `BulkHead (aka Failure Units)`:
  #### Core Isolation pattern :
   - **Pure Design issue**: what should be independent of what ?
-  - ![draw_boundaries](images/boundaries.png) <br>
+ ![draw_boundaries](images/boundaries.png) <br>
   - **1st** we need to identify the pieces in our architecture that should still work, even if other parts on our system are down .
   - **2nd** you should draw these lines and say whatever in green should not depend on stuff on blue or yellow.
   - **3rd** if the blue has to work reasanbly without the green ones , you would have to `cache(replicate) some data` of the green one to survive them being down (`use these boundaries as boundaries of redundancy`).
