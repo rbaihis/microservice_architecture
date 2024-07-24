@@ -33,7 +33,7 @@ ___
 
 ***
 ## Isolation (importance of foreseeing potential errors):
- ### Catastrophic Failure:
+ ### Catastrophic Failures Examples :
   - Ex1 : **Long Chain of REST calls** : A->B->C->D->E (anything can go wrong in this chain)
     - any failure can blow up the whole thing.
     - any delay in this processing can delay all the upstream systems
@@ -50,5 +50,5 @@ ___
   - Ex3 : **Concurrent Massive DB Import/Export overloads the DB**: end-users running db heavy import-export operation that takes too long and keep refreshing
      - => result on concurrent heavy operations that exhaust the database .
      - ==> its very important to introduce boundaries around parts of your system.
-  - Ex3 : ****:
+     - 
 ***
