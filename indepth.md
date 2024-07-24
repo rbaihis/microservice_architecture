@@ -1,4 +1,4 @@
-# In-Depth Talk When Building Microservices and distributed Systems :
+# Reseliance PatternsMust Know Building Microservices :
 </br>
 
 ## Distributed-System Defenition
