@@ -35,7 +35,7 @@ ___
 ![patterns we will study](images/patterns.png)
 
 ---
-## <u><u>Isolation (importance of foreseeing potential errors):</u></u>
+## <span style="color: red;">Isolation (importance of foreseeing potential errors):</span>
  ### Catastrophic Failures Examples :
   - Ex1 : **Long Chain of REST calls** : A->B->C->D->E (anything can go wrong in this chain)
     - any failure can blow up the whole thing.
