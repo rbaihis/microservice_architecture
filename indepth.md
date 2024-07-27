@@ -93,14 +93,19 @@ ___
    - **Stuff that directly costs you** :
      - **Traffic** max 1Gb/minute .
      - **Resource units if you're in a cloud environment**  max 300 credits/minute.
- - ### Where to throttle these:
+ - #### Where to throttle these:
    - globally
    - per client
    - per endpoint
- - ### example of throttling features :
+- #### example of throttling features :
    - ![throttling example](images/throttlingex.png) 
    - Feature A critical (untouched) business-critical can't be degraded.
    - feature C needed (but degraded) to give some extra space to feature A.
    - feature D (stopped completely) to leave its resource utilization to both A and C, so the system won't freeze/crash when reaching maximum capacity (case resource limitation/budget-tight).
    - ps: must consider optimization problems like linear programming to calculate the degradation rate in the pick of feature A.
-    
+     
+- #### facing a lot of Usage Spikes:
+  - you usage pattern looks like this: ![spikes](images/spikesInUsagePattern.png)
+  - ==> bulks of requests coming and being paged to you like 1000req/sec how do you survive?
+  - **First all Engineers must Understand** is the performance response curve.
+    - !(performance Response Curve)[images/performanceResponseCurve.png]
