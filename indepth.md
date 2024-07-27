@@ -68,9 +68,9 @@ ___
     - if you develop cloud solutions to have your clients not influencing each other, having a VIP tenant should not fail if your regular customers are growing in numbers.
  ### To isolate them you Can Use:
   - **(connection|thread) pools**:
-   * **within the** same application: first level, you could use different connections and thread pools, different resources within the same application.
+    - **within the** same application: first level, you could use different connections and thread pools, different resources within the same application.
   - **Application Instances**:
-   * second level, deploy completely different application instances one process could fail the other could still work.
+    - second level, deploy completely different application instances one process could fail the other could still work.
   - **Databases, Queues**:
-    * next-level, will be to fully separate down to database and messaging infrastructure to have completely separated resources involved in each of the bulkheads. Depending on how much you want to invest in this and how and where do you see the failures you can go deeper or not.
+    - next-level, will be to fully separate down to database and messaging infrastructure to have completely separated resources involved in each of the bulkheads. Depending on how much you want to invest in this and how and where do you see the failures you can go deeper or not.
 ***
