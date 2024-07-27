@@ -118,5 +118,10 @@ ___
         - `kill the database` the database will also be affected since too many write requests concurently can occure especially if ACID will increase response time.
      - **solutions**
        - **1-degradation-ok** `identity load too high` and enqueue some of it to assure no failure but degradation in response-time is ok and does not matter ==> ex [0 --> safeNotToCrush]
-       - ***2-Critical-responseTime** Identify load close to best performance when starts slowing down a bit to ensure good response time that will not affect customer experience endUsers/ClientsB2B ==> ex [0 --> endOfSweetSpot].
-       - **Use Async MessageQueue** for excessive load to improve the overall experience `keep in mind to consider responsetime now because $resTime= queueWaiting + executionTime$`
+       - **2-Critical-responseTime** Identify load close to best performance when starts slowing down a bit to ensure good response time that will not affect customer experience endUsers/ClientsB2B ==> ex [0 --> endOfSweetSpot].
+       - **trick to Improve Overall Performance(use Async)** for the excessive load , **enqueue the request in a message queue** `.
+         - ##### keep in mind Must consider :
+           - **responsetime queue Monitoring** now the $resTime= queueWaiting + executionTime$` make sure that the time is not too much so optimize with consideration.
+           - **queue sizes  Monitoring**  monitor queue size between services to not blow up queue with outOfMemory.
+   - ---
+ - ###  Full Parameter Check input :
