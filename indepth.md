@@ -108,4 +108,14 @@ ___
   - you usage pattern looks like this: ![spikes](images/spikesInUsagePattern.png)
   - ==> bulks of requests coming and being paged to you like 1000req/sec how do you survive?
   - **First all Engineers must Understand** is the performance response curve.
-    - !(performance Response Curve)[images/performanceResponseCurve.png]
+    - ![performance Response Curve](images/performanceResponseCurve.png)
+    - **throughput**: is the number of requests that can be successfully handled per unit per time.
+    - **concurrent requests single machine** the number of concurrent requests that start executing in a single machine.
+    - => the more pressure u put on a machine at some point you re going to see `degradation of response time` --> u gonna see slowing down of the entire speed of that system.
+      - why? because you will have:
+        - Memory issues
+        - Compete on processor
+        - `kill the database` the database will also be affected since too many write requests concurently can occure especially if ACID will increase response time.
+     - **solutions**
+       - **1-degradation-ok** `identity load too high` and enqueue some of it to assure no failure but degradation in response-time is ok and does not matter ==> ex [0 --> safeNotToCrush]
+       - ***2-Critical-responseTime** Identify load close to best performance when starts slowing down a bit to ensure good response time that will not affect customer experience endUsers/ClientsB2B ==> ex [0 --> endOfSweetSpot].
