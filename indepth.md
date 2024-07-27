@@ -35,9 +35,9 @@ ___
 ## Isolation (importance of foreseeing potential errors):
  ### Catastrophic Failures Examples :
   - Ex1 : **Long Chain of REST calls** : A->B->C->D->E (anything can go wrong in this chain)
-   - any failure can blow up the whole thing.
-   - any delay in this processing can delay all the upstream systems
-   -  => its a terrible fragile architecture (simply a distributed monolith architecture)
+    - any failure can blow up the whole thing.
+    - any delay in this processing can delay all the upstream systems
+    -  => its a terrible fragile architecture (simply a distributed monolith architecture)
   - Ex2 : **A request causes the instance to restart**:  and client keeps retrying or refreshing.
   - Ex3 : **A poison pill case MessageQueue**: receiving some type of particular message that causes the listener to crash.
      - and that message is retried again and agian not only just crushing your listener once .
