@@ -50,14 +50,27 @@ ___
   - Ex5 : **Concurrent Massive DB Import/Export overloads the DB**: end-users running db heavy import-export operation that takes too long and keep refreshing
      - => result on concurrent heavy operations that exhaust the database .
      - ==> its very important to introduce boundaries around parts of your system.
-### Introducing Boundaries `BulkHead (aka Failure Units)`:
- #### Core Isolation pattern :
-  - **Pure Design issue**: what should be independent of what ?
+ ### Introducing Boundaries `BulkHead (aka Failure Units)`:
+  #### Core Isolation pattern :
+   - **Pure Design issue**: what should be independent of what ?
  ![draw_boundaries](images/boundaries.png) <br>
-  - **1st** we need to identify the pieces in our architecture that should still work, even if other parts on our system are down .
-  - **2nd** you should draw these lines and say whatever in green should not depend on stuff on blue or yellow.
-  - **3rd** if the blue has to work reasanbly without the green ones , you would have to `cache(replicate) some data` of the green one to survive them being down (`use these boundaries as boundaries of redundancy`).
-  - **4th** use the bundaries as **units of scale** enough to scale up that bubble and not every single service.
-     
-
+   - **1st** we need to identify the pieces in our architecture that should still work, even if other parts on our system are down .
+   - **2nd** you should draw these lines and say whatever in green should not depend on stuff on blue or yellow.
+   - **3rd** if the blue has to work reasanbly without the green ones , you would have to `cache(replicate) some data` of the green one to survive them being down (`use these boundaries as boundaries of redundancy`).
+   - **4th** use the bundaries as **units of scale** enough to scale up that bubble and not every single service.
+    
+ ### Isolating Bulkhead Examples:     
+  - by **Key Features**: catalog , search, checkout
+   - The catalog could be down, but users can still search   and check out  products from their cart.
+  - by **Markets|Region**:
+   - deploy the same product in different countries, if you lose Romania you can still save France.
+  - by **Tenants**:
+   - if you develop cloud solutions to have your clients not influencing each other, having a VIP tenant should not fail if your regular customers are growing in numbers.
+ ### To isolate them you Can Use:
+  - **(connection|thread) pools**:
+   - within the same application: first level, you could use different connections and thread pools, different resources within the same application.
+  - **Application Instances**:
+   - second level, deploy completely different application instances one process could fail the other could still work.
+  - **Databases, Queues**:
+   - next-level, will be to fully separate down to database and messaging infrastructure to have completely separated resources involved in each of the bulkheads. Depending on how much you want to invest in this and how and where do you see the failures you can go deeper or not.
 ***
