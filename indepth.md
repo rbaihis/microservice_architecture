@@ -76,7 +76,7 @@ ___
     - second level, deploy completely different application instances one process could fail the other could still work.
   - **Databases, Queues**:
     - next-level, will be to fully separate down to database and messaging infrastructure to have completely separated resources involved in each of the bulkheads. Depending on how much you want to invest in this and how and where do you see the failures you can go deeper or not.
----
+    - ---
 ### `Throttling`:
  - throttling means you need to put an artificial limit to the amount of load the server could take.
  - **why limiting the Load** on a server:
@@ -123,5 +123,5 @@ ___
          - ##### keep in mind Must consider :
            - **responsetime queue Monitoring** now the $resTime= queueWaiting + executionTime$` make sure that the time is not too much so optimize with consideration.
            - **queue sizes  Monitoring**  monitor queue size between services to not blow up queue with outOfMemory.
-   - ---
+     - ---
  - ###  Full Parameter Check input :
