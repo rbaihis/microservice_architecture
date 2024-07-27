@@ -35,7 +35,7 @@ ___
 ![patterns we will study](images/patterns.png)
 
 ---
-## <span style="color: red;">Isolation (importance of foreseeing potential errors):</span>
+## Isolation (importance of foreseeing potential errors):
  ### Catastrophic Failures Examples :
   - Ex1 : **Long Chain of REST calls** : A->B->C->D->E (anything can go wrong in this chain)
     - any failure can blow up the whole thing.
@@ -124,4 +124,49 @@ ___
            - **responsetime queue Monitoring** now the $resTime= queueWaiting + executionTime$` make sure that the time is not too much so optimize with consideration.
            - **queue sizes  Monitoring**  monitor queue size between services to not blow up queue with outOfMemory.
      - ---
- - ###  Full Parameter Check input :
+ - ###  Full Parameter Check input (between microservice):
+   - **Important !** Any data that comes to your system has to be validated `before you invest  on any resources in it` to not do actions all from the start, that will fail eventually later when investing on resources.
+   - **validate ClientRequests/APIsResponses** as soon as you see it to make sure the parameters are correct.
+   - **Validate only What you care about** do not waist your time over validating the full schema just validate the fields your service care about `don't go too far with validating fields u don't care about`.
+   - ==> **Robustness Principal** Be conservative in what you do, but be tolerant in what you accept from others.
+     
+---
+ ## Lateny Control:
+  - it's important to control your latency in a microservice architecture, using the best timouts, failingFast if failure is a fact and majority of request is failure use circuitBreaker, FanOut request to multiple services and get the quickest answer for expensive but some usecases .
+  - ### Timeout:
+    - when you call a system the first thing that you should put in place is TimeOuts.
+    - **set a timeout every time u block** not only when you call network , perhaps you block to get a signle in a reactive sync or you do future.get()  ==> so `any time you block you should have timeout there`.
+    - **TimeOut Too Large**: Impacts my response Time --> impact my Client
+      - mind the default timeout in frameworks some are 1-minute, and some even **unbounded** `your call may be blocked forever` unnormal.
+    - **TimeOut Too Short**:
+      - `May result in False Errors`  the operation may succeed Later on the server and you didn't know.
+    - **How To Decide**
+      - for `TimeOut Too Short` Keep above the API measured/SLA response Time above what they call maximum a bit (max it a bit or 99%th) to avoid false errors and to be safer.
+      - `Tailor per Endpoint` ex longer for Export operation or functionalities with long execution time.
+      - `Monitor + Alarms` monitor timeouts to see for any issues , some Apis may change their implementation and they don't notify us about it better safe then sorry.
+  - ### FailFast(latency-control)--Retry(isolation)--idempotency(loose-coupling):
+    - `we have call failed or timed out` what i can do ?
+      - I want to **`Retry(isolation)`** :
+        - check **Cause** :
+          - 400 --> your fault client is fault bad request fix it .
+          - 500 --> you have no clue. (if repeated more then 95% of time just circuit-Break and do'nt use it until fixed)
+          - **timeout** --> you could try to retry maybe you `misjudged your client timout`.
+          - **Part of response {retryable:(false|true)}** --> if true means either `operation is idempotent` safe to retry and it's ok or a minor issue in the API then give it a try, but if >80% same problem consider circuit breaker.
+        - **Ask Yourself ?**:
+          - **Worth retrying**, **Max attempts**, **What BackOff**, **How to Monitor** , is The operation **idempotent**.
+        - `Retry !!` **Requires Operation to be `Idempotent(looseCoupling)`**.
+        - **Idempotenet Operation** is an operation if repeating it `doesn't change or harm any state` of the server.
+          - **Ex Idempotent ops**:
+            - Get productByID, CancelPaymentById, UpdateProductPrice(entering the same input twice will result in same state).
+          - **Ex Non-Idempotent ops**:
+            - **PlaceOrder** retry could create a second order there fore it must be developed to be Idempotent.
+              - **How to fix** (do strategies in your code to make it idempotent):
+                - **1-detect duplicates via pastHoursOrder ex : pastHoursOrder= Map<CustomerId,List<hash(order)>> and answer u have ordered already within an hour is this a duplicate or u want to proceed.
+                - 2-Alow the client to give you the Id, if the clients adds a unique identifier to the request and repeat it ==> you will just have UniqueKeyViolation if you try to persist the same order and good luck retrying.
+
+    - #### Case Consider Circuit Breaker (relation with RetryIsolation & IdempotencyLooseCoupling)
+      - **Via Monitoring `over the last 5min 99% request to system Failed or timed out`**
+        - **Just Fail Fast**
+          - use the `the Circuit-Breaker` cut off the service and fail fast `alert supervisor` to fix issue or fix timeout if client timeout is lower then server is new SLA that he may change the execution-time without notifying or he is overloaded.
+  - ### Bounded Queues(relation with throttling in Isolation):
+  
