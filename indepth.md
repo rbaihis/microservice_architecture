@@ -28,10 +28,13 @@ ___
  - sol 2: **send it as message**: instead of HTTP use asynchronous MQ approach and the system will handle it when available (handle end-user retry gracefully)
  - sol 3: **Log an ERROR**: at least log an error, that raises the alarm calling for manual intervention.
      - sol 3: **Case: too frequent Errors**: send an error event to `supervisor for automatic Recovery([saga pattern]())`.
+***
+***
+***
 ## Patterns we will study :
 ![patterns we will study](images/patterns.png)
 
-***
+---
 ## Isolation (importance of foreseeing potential errors):
  ### Catastrophic Failures Examples :
   - Ex1 : **Long Chain of REST calls** : A->B->C->D->E (anything can go wrong in this chain)
@@ -73,4 +76,31 @@ ___
     - second level, deploy completely different application instances one process could fail the other could still work.
   - **Databases, Queues**:
     - next-level, will be to fully separate down to database and messaging infrastructure to have completely separated resources involved in each of the bulkheads. Depending on how much you want to invest in this and how and where do you see the failures you can go deeper or not.
-***
+---
+### `Throttling`:
+ - throttling means you need to put an artificial limit to the amount of load the server could take.
+ - **why limiting the Load** on a server:
+   - **Prevent crash** We prefer to see `503 service unavailable better than outOfMemoryError` .
+   - **Prevent Long ResponseTime** we prefer to have an error in 30second then success withing 1 minute , end user may consider it a failure and retry and overwhelm the service more with the same request that is already processed, and to make it worse if method called is not idempotence then dister will happens (time-response is based on context).
+   - **Protect critical endpoints** services are not allowed to impact more important critical services endpoints.
+     - ex: export invoices service that the secretary is running is **not allowed to impact the place order endpoint** you want to give more priority to the order service because its business-critical.
+     - **ensure fairness** return 429ToManyRequestStatus to greedy clients/tenants to tell that client to backOff and lower their rate of call.
+     - **Limit auto-scaling to fit the budget** of scaling on a cloud provider or your private cloud.
+       
+ - #### what to throttle, basically those 3:
+   - **Request Rate** number of request/second , ex max 300 requests/seconds, eg via @RateLimiter
+   - **Concurrency** number of requests that happen at the same-time(parallel), ex max 3 exports in parallel, eg via @BulkHead .
+   - **Stuff that directly costs you** :
+     - **Traffic** max 1Gb/minute .
+     - **Resource units if you're in a cloud environment**  max 300 credits/minute.
+ - ### Where to throttle these:
+   - globally
+   - per client
+   - per endpoint
+ - ### example of throttling features :
+   - ![throttling example](images/throttlingex.png) 
+   - Feature A critical (untouched) business-critical can't be degraded.
+   - feature C needed (but degraded) to give some extra space to feature A.
+   - feature D (stopped completely) to leave its resource utilization to both A and C, so the system won't freeze/crash when reaching maximum capacity (case resource limitation/budget-tight).
+   - ps: must consider optimization problems like linear programming to calculate the degradation rate in the pick of feature A.
+    
