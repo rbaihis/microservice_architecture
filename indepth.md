@@ -119,3 +119,4 @@ ___
      - **solutions**
        - **1-degradation-ok** `identity load too high` and enqueue some of it to assure no failure but degradation in response-time is ok and does not matter ==> ex [0 --> safeNotToCrush]
        - ***2-Critical-responseTime** Identify load close to best performance when starts slowing down a bit to ensure good response time that will not affect customer experience endUsers/ClientsB2B ==> ex [0 --> endOfSweetSpot].
+       - **Use Async MessageQueue** for excessive load to improve the overall experience `keep in mind to consider responsetime now because $resTime= queueWaiting + executionTime$`
