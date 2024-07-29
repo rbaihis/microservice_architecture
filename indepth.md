@@ -202,4 +202,4 @@
         - **Databases** Keep state on db and make your services fetch the state
         - **Clients** put state `if not security critical` on clients (mobile, browser) and `if related to UI flow`. 
         - **Via Request Tokens** accept some of that state to be  coming in  as request tokens, `if user metadata` like email, roles, id
-     - ==> By keeping your service stateless, then you can start many of them and `distribute loads between them`. ![](locationtransparency.png)
+     - ==> By keeping your service stateless, then you can start many of them and `distribute loads between them`. ![](images/locationtransparency.png)
