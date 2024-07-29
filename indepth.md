@@ -15,6 +15,12 @@ ___
 ___
 
 
+
+***
+***
+***
+## Patterns we will study :
+
  ### Resilience patterns (graceful Degradation & FallBack):
   * **What is a Resilient System**:(trying to do your best not to show the failure) is the ability of a system to handle **unexpected** situations `without users noticing`(best-case), or with a `graceful degradation` of service
 ---
@@ -32,14 +38,11 @@ ___
   - **Problem4**: can't send result immediately ==> notify by we will send you the result later in an email when we're done.
 ### Example of Graceful degradation (Write-problems) :
  - **Problem5**: command to change data.
- - sol 1: **outbox table pattern**: insert it in DB of the caller service the request + schedule a persistant retly until successful
- - sol 2: **send it as message**: instead of HTTP use asynchronous MQ approach and the system will handle it when available (handle end-user retry gracefully)
- - sol 3: **Log an ERROR**: at least log an error, that raises the alarm calling for manual intervention.
-     - sol 3: **Case: too frequent Errors**: send an error event to `supervisor for automatic Recovery([saga pattern]())`.
-***
-***
-***
-## Patterns we will study :
+   - sol 1: **outbox table pattern**: insert it in DB of the caller service the request + schedule a persistant retly until successful
+   - sol 2: **send it as message**: instead of HTTP use asynchronous MQ approach and the system will handle it when available (handle end-user retry gracefully)
+   - sol 3: **Log an ERROR**: at least log an error, that raises the alarm calling for manual intervention.
+   - sol 4 : **Case: too frequent Errors**: send an error event to `supervisor for automatic Recovery([saga pattern]())`.
+
 ![patterns we will study](images/patterns.png)
 
 ---
