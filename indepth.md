@@ -20,6 +20,7 @@ ___
 ***
 ***
 ## Patterns we will study :
+![patterns we will study](images/patterns.png)
 
  ### Resilience patterns (graceful Degradation & FallBack):
   * **What is a Resilient System**:(trying to do your best not to show the failure) is the ability of a system to handle **unexpected** situations `without users noticing`(best-case), or with a `graceful degradation` of service
@@ -43,7 +44,6 @@ ___
    - sol 3: **Log an ERROR**: at least log an error, that raises the alarm calling for manual intervention.
    - sol 4 : **Case: too frequent Errors**: send an error event to `supervisor for automatic Recovery([saga pattern]())`.
 
-![patterns we will study](images/patterns.png)
 
 ---
 ## Isolation (importance of foreseeing potential errors):
