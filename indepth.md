@@ -15,10 +15,18 @@ ___
 ___
 
 
-## Resilience patterns:
- * **What is a Resilient System**:(trying to do your best not to show the failure) is the ability of a system to handle **unexpected** situations `without users noticing`(best-case), or with a `graceful degradation` of service.
- ### Example of Graceful degradation (Read-problems) :
-  - **Problem1**: trying to retrieve data from a system that is down ==> you could serve an older value and hope nothing can go wrong importance of caching.
+ ### Resilience patterns (graceful Degradation & FallBack):
+  * **What is a Resilient System**:(trying to do your best not to show the failure) is the ability of a system to handle **unexpected** situations `without users noticing`(best-case), or with a `graceful degradation` of service
+---
+  ### FallBack and Graceful Degradation
+  - What is fallback design?
+    - The Fallback design pattern is a resiliency pattern used in microservices architecture to handle failures gracefully. It ensures that when a service is unavailable or fails, the system can continue to operate by providing an alternative response or executing a predefined fallback mechanism.
+ - **The fallback method**:
+   - mechanism works like a try/catch block. If a fallback method is configured, every exception is forwarded to a fallback method executor. The fallback method executor is searching for the best matching fallback method which can handle the exception. Similar to a catch block.
+ - **FallBack API**:
+   - A fallback using API Gateway is a plan B for an API - when the primary API service fails, the API Gateway can redirect traffic to a secondary service or return a predefined response.
+  ### Example of Graceful degradation and FullBack (Read-problems) :
+    - **Problem1**: trying to retrieve data from a system that is down ==> you could serve an older value and hope nothing can go wrong importance of caching.
   - **Problem2**: can't access user recommendation ==> return lower quality as recommendation per country, city, or gender better than nothing.
   - **Problem3**: search optimiser not working ==> call a slower system, for example, search in sqlDb when ElasticSearch is down better than nothing.
   - **Problem4**: can't send result immediately ==> notify by we will send you the result later in an email when we're done.
