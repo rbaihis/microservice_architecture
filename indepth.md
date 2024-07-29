@@ -11,11 +11,6 @@
 ##  Key Things to Do to Mitigate Failure:
   * write more tests: unit-tests, end-to-end, as well as (load-test, spike, resilience, [ToxyProxy_tool_to_delay_traffic_between_services_for_testing](https://github.com/Shopify/toxiproxy/blob/main/README.md) )
   * try to recover from failure as fast as you can, we want to have a detection mechanism and ways we can backup as soon as possible.
-___
-___
-
-
-
 ***
 ***
 ***
@@ -122,18 +117,21 @@ ___
     - ![performance Response Curve](images/performanceResponseCurve.png)
     - **throughput**: is the number of requests that can be successfully handled per unit per time.
     - **concurrent requests single machine** the number of concurrent requests that start executing in a single machine.
-    - => the more pressure u put on a machine at some point you re going to see `degradation of response time` --> u gonna see slowing down of the entire speed of that system.
+    - => the more pressure u put on a machine at some point you re going to see `degradation of response time` --> u gonna see a slowing down of the entire speed of that system.
       - why? because you will have:
-        - Memory issues
+        - Memory issues   
         - Compete on processor
         - `kill the database` the database will also be affected since too many write requests concurently can occure especially if ACID will increase response time.
      - **solutions**
        - **1-degradation-ok** `identity load too high` and enqueue some of it to assure no failure but degradation in response-time is ok and does not matter ==> ex [0 --> safeNotToCrush]
        - **2-Critical-responseTime** Identify load close to best performance when starts slowing down a bit to ensure good response time that will not affect customer experience endUsers/ClientsB2B ==> ex [0 --> endOfSweetSpot].
-       - **trick to Improve Overall Performance(use Async)** for the excessive load , **enqueue the request in a message queue** `.
-         - ##### keep in mind Must consider :
+       - **trick to Improve Overall Performance(use Async)** for the excessive load ,  
            - **responsetime queue Monitoring** now the $resTime= queueWaiting + executionTime$` make sure that the time is not too much so optimize with consideration.
            - **queue sizes  Monitoring**  monitor queue size between services to not blow up queue with outOfMemory.
+-  ### Bounded Queues(LatenctControl) relationship with throttling:
+  - Bounded Queue is a part of the Latency Control pattern but its quit in a relationship with throttling in the isolation pattern when we decide to use optimization in our service when using throtlling.
+  - it's important that queues are bounded to avoid the pitfalls of having a large queue, which may leadj to either having a longer response time or  the message queue itself blows up with outOfMemoryError. So its important to have a max of the number of element in a waiting  queue that your infra can handle and that your service can process later without very long response time.
+
      - ---
  - ###  Full Parameter Check input (between microservice):
    - **Important !** Any data that comes to your system has to be validated `before you invest  on any resources in it` to not do actions all from the start, that will fail eventually later when investing on resources.
@@ -180,5 +178,4 @@ ___
         - **Just Fail Fast**
           - use the `the Circuit-Breaker` to cut off the service and fail fast `alert supervisor` to fix issue or fix timeout if client timeout is lower then the API is new config that it does not match the existing SLA, API provider may have changed the execution-time without notifying or he is overloaded.
           - ![circuit breaker](images/circuitBreaker.png)
-  - ### Bounded Queues(relation with throttling in Isolation):
   
