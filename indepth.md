@@ -151,7 +151,7 @@ ___
           - 400 --> your fault client is fault bad request fix it .
           - 500 --> you have no clue. (if repeated more then 95% of time just circuit-Break and do'nt use it until fixed)
           - **timeout** --> you could try to retry maybe you `misjudged your client timout`.
-          - **Part of response {retryable:(false|true)}** --> if true means either `operation is idempotent` safe to retry and it's ok or a minor issue in the API then give it a try, but if >80% same problem consider circuit breaker.
+          - **Part of response {retryable:(false|true)}** --> if true means either `operation is idempotent` safe to retry and it's ok or a minor issue in the API then give it a try, but if > 99% same problem consider circuit breaker.
         - **Ask Yourself ?**:
           - **Worth retrying**, **Max attempts**, **What BackOff**, **How to Monitor** , is The operation **idempotent**.
         - `Retry !!` **Requires Operation to be `Idempotent(looseCoupling)`**.
@@ -167,6 +167,7 @@ ___
     - #### Case Consider Circuit Breaker (relation with RetryIsolation & IdempotencyLooseCoupling)
       - **Via Monitoring `over the last 5min 99% request to system Failed or timed out`**
         - **Just Fail Fast**
-          - use the `the Circuit-Breaker` cut off the service and fail fast `alert supervisor` to fix issue or fix timeout if client timeout is lower then server is new SLA that he may change the execution-time without notifying or he is overloaded.
+          - use the `the Circuit-Breaker` to cut off the service and fail fast `alert supervisor` to fix issue or fix timeout if client timeout is lower then the API is new config that it does not match the existing SLA, API provider may have changed the execution-time without notifying or he is overloaded.
+          - ![circuit breaker](images/circuitBreaker.png)
   - ### Bounded Queues(relation with throttling in Isolation):
   
