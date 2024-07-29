@@ -178,4 +178,28 @@
         - **Just Fail Fast**
           - use the `the Circuit-Breaker` to cut off the service and fail fast `alert supervisor` to fix issue or fix timeout if client timeout is lower then the API is new config that it does not match the existing SLA, API provider may have changed the execution-time without notifying or he is overloaded.
           - ![circuit breaker](images/circuitBreaker.png)
-  
+  ### Where & When To implement These : 
+   - ![When & where to implement these](images/whentoimplement.png)
+   - when you re calling a `fragile/slow system`, you should discuss about those patterns very early, you are going to consider `timeout retry` for those.
+   - when you have calls going between diffirent BulkHeads that you have identified in your architecture, if there is calls aggregation or calls you need to enforce these protections in between.
+   - **Where To implement These**:
+     - Most teams implements these patterns in the API-GateWay to protect their microservice ecosystem.
+       - **Cons**:
+         - finding many microservices under the gateway ==> possibility to fail as a whole if one microservice goes down.
+       - **Solution for this**:
+         - keep the number of microservices that an API-Gateway that it protects Low, those bulkhead should be smaller if you want to build more reseliant systems.
+---
+---
+## Loose Coupling:
+  - ### Stateless Service:
+    - keeping state inside a service can impact `Consistency` `Availability` `scalability`
+    - **Problems Keeping State**:
+      - *Consistency* All nodes must sync it
+      - *Availability* Failover nodes must replicate it 
+      - *Scalability* New instances must copy it
+    - **How To `make it Stateless`**:
+      - **Move State Out To**:
+        - **Databases** Keep state on db and make your services fetch the state
+        - **Clients** put state `if not security critical` on clients (mobile, browser) and `if related to UI flow`. 
+        - **Via Request Tokens** accept some of that state to be  coming in  as request tokens, `if user metadata` like email, roles, id
+     - ==> By keeping your service stateless, then you can start many of them and `distribute loads between them`. ![](locationtransparency.png)
