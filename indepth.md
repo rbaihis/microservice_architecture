@@ -9,7 +9,7 @@
   * $availability = upTime/totalTime =  \frac{\bar{\text{meanTimeToFailure}}}{\bar{\text{meanTimeToFailure}} + \bar{\text{meanTimeToRecovery}}}$
 
 ##  Key Things to Do to Mitigate Failure:
-  * write more tests: unit-tests, end-to-end, as well as (load-test, spike, resilience, [ToxyProxy_tool_to_delay_traffic_between_services_for_testing](https://github.com/Shopify/toxiproxy/blob/main/README.md) )
+  * write more tests: unit, end-2-end, as well as (load-test, spike, resilience, [ToxyProxy_tool_to_delay_traffic_between_services_for_testing](https://github.com/Shopify/toxiproxy/blob/main/README.md))
   * try to recover from failure as fast as you can, we want to have a detection mechanism and ways we can backup as soon as possible.
 ***
 ***
