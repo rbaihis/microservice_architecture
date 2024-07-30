@@ -187,7 +187,14 @@
        - **Cons**:
          - finding many microservices under the gateway ==> possibility to fail as a whole if one microservice goes down.
        - **Solution for this**:
-         - keep the number of microservices that an API-Gateway that it protects Low, those bulkhead should be smaller if you want to build more reseliant systems.
+         - keep the number of microservices that an API gateway that it protects Low, those bulkhead should be smaller if you want to build more reseliant systems.
+   - **Timeout-CircuitBreaker Implementation Example**:
+     - **case MS communicate with external-API**:
+       ![timeout external API case](images/timoutexternalapicase.png)
+       - It's important to define your timeouts in outbound and inbound gateways if operations in your microservices rely on external API.
+       - why, to mitigate the risk of changes in execution time or Latency of the external API, and correct that by only updating the   
+     - **case Synchronous MS-->MS communication**
+       ![timeout external API case](images/innertimeoutecase.png)
 ---
 ---
 ## Loose Coupling:
