@@ -240,6 +240,21 @@
           - we could find places in which you could easily recover, or find workarounds.
           - ---
 - ### Event-Sourcing (eventual consistency):
-    
-    
-
+  - is the big brother of messages, has the idea of **the idea to store the events in a database and have those as the source of truth**.
+  - Event sourcing stores state changes as a sequence of events rather than the current state. The current state is rebuilt by replaying these events, providing an audit trail, and enabling features like undo functionality.
+  - #### Benefits and how it works:
+    - **State Moves Via Events** --> less REST
+    - **Lossless capture of History** wonderful for resilience because you can not lose anything in the past, anything that happens is stored as an event in an `Event Store(is a specialized storage system used to persist events. Instead of storing the current state of an entity directly)`.
+    - **Time Travel Ability** by replaying the events, you can rebuild the state at any point in the past by replaying the event , amazing for reseliance you cannot loose stuff anymore.
+    - **Briefly how it works**:
+      - **1/Capturing Events**: Each change in state is recorded as an event. **2/Storing Events**: Events are saved in an append-only, time-ordered log. **3/Rebuilding State**: The current state is reconstructed by replaying these events.
+      - **Characteristics**:
+        - Append-only: Events are added, not modified or deleted.
+        - Time-ordered: Events are stored in sequence.
+        - Immutable: Events are permanent and unchangeable. 
+- ### Super Scalable ReadPart (CQRS):
+  - if you want to go super scalable for the Reading Part, you can use CQRS and have multiple machines consuming from that single stream of events, and suddenly you can have 10 Machines serving the searches and the reads to meet a very high scalability need, eq like google search 
+---
+- ### Messaging Pitfall:
+  - ok
+  - 
