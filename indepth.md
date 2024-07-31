@@ -254,7 +254,7 @@
         - Immutable: Events are permanent and unchangeable. 
 - ### Super Scalable ReadPart (CQRS):
   - if you want to go super scalable for the Reading Part, you can use CQRS and have multiple machines consuming from that single stream of events, and suddenly you can have 10 Machines serving the searches and the reads to meet a very high scalability need, eq like google search 
----
+        - ---
 - ### Messaging Pitfall:
   - ok
   - 
