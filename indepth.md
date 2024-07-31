@@ -293,7 +293,7 @@
 
      - instead of of `returning the error upstream(backwards in the flow)`  you could **escalate them** maybe call a supervisor(auto|manual) to reconcile that.
     - the `Flow of the process` is **orthogonal** to how the **error should be reported**.
-      - ![escalation](images/escalation.png)
+      - ![escalation](images/escalation.jpg)
       - ---
   - ### Error-Handler:
     - #### People (embrace automation)
