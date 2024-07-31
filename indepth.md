@@ -1,6 +1,12 @@
 # Reseliance PatternsMust Know Building Microservices :
 </br>
 
+   - ## Brief Overview KeyPoints i deducted not all:
+     ![](images/keypoints.png)
+      
+
+---
+---
 ## Distributed-System Defenition
   * A distributed system is one in which the failure of a computer you didn't even know existed, can render your own computer unusable.
 
@@ -157,7 +163,8 @@
   - ### FAN-OUT & Quickest Reply
     - is firing **multiple requests at the same time** for the `same goal` and have the fastest response win .
     - used in mission-critical when u need a very fast response .
-    - in some domain its cheaper ()
+    - in some domain its cheaper and suitable for this to maintain business.
+    - ---
   - ### FailFast(latency-control)--Retry(isolation)--idempotency(loose-coupling):
     - `we have call failed or timed out` what i can do ?
       - I want to **`Retry(isolation)`** :
@@ -222,8 +229,7 @@
     - you need to chose between either {P,A}or{P,C}.
     - Microservices `Favors Availability` for scaling purposes.
     - ==> We need `to trade off Some Of the Consistency for it`, this could scare us because we don't know what the current state is right now, and also because we're used to the monolithic approach and its acid transactional databases.
-  
-    
+   
   - ### Asynchronous Communication (MQ):
     - #### Why Async (MQ)
       - **Guarantee Delivery** message queues guarantee delivery even if the receiver is unavailable now, not like sync(REST) methods.
@@ -257,7 +263,7 @@
         - Append-only: Events are added, not modified or deleted.
         - Time-ordered: Events are stored in sequence.
         - Immutable: Events are permanent and unchangeable. 
-- ### Super Scalable ReadPart (CQRS):
+  - ### Super Scalable ReadPart (CQRS):
   - if you want to go super scalable for the Reading Part, you can use CQRS and have multiple machines consuming from that single stream of events, and suddenly you can have 10 Machines serving the searches and the reads to meet a very high scalability need, eq like google search
   - ---
 - ### Messaging Pitfall:
@@ -268,3 +274,37 @@
   - **Event Versionning**: solution backward-forward compatibility
   - **broker down insufficient resources** solution Monitoring
   - **Misconfiguration of Infrastructure**:
+  - 
+---
+---
+## Supervision:
+  - ### Health-Check:
+    - its support important that our services exposes a health check endpoint like (spring boot actuator health).
+    - that **tells some monitoring tools** what is the reason of the failure.
+    - Ex:
+      - service interfaces your ecosystem with a payment gateway, `if that payment gateway is down , your **health endpoint should tell that**` the system that i already depend on is down . so you can immediatly pinpoint on the root cause .
+      - ---
+  - ### Monitoring:
+    - ---
+  - ### Escalation:
+    - why need it :
+     - its really really tricky , when every time some works in a MS blows up, `to return an error to the caller, and maybe the caller can't solve that problem if its internal to that MS more than the logic itself` , it cant help you with anything , especially if using messages it can't know .
+     - most Errors can't be fixed by the clients (unless we re talking about some payload or incorrect request)
+
+     - instead of of `returning the error upstream(backwards in the flow)`  you could **escalate them** maybe call a supervisor(auto|manual) to reconcile that.
+    - the `Flow of the process` is **orthogonal** to how the **error should be reported**.
+      - ![escalation](images/escalation.png)
+      - ---
+  - ### Error-Handler:
+    - #### People (embrace automation)
+      - its always a people problem, no matter what problem seems to be at first.
+      - if performance issue occures you re dead if no proper monitoring happens
+      - **solution to get to those highly resilent system**:
+        - you need **DevOps teams** tusi means you have your team responsible for the full lifecycle of your product from conception down to production monitoring and back.(perhaps with help of some pure blood OPS if needed)
+        - **Own your Production** should know to :
+          - see metrics && sets alarms (production metrics and all other metrics )
+          - understand how to set a graph in grafana .
+          - set an alarm
+          - expose a metric
+          - trace request across your systems & view the arrogated log fo what the request caused to happen
+          - see time-spans of request to verify|optimise the **configuration/solution of latency control pattern**. tool eg zipkin.
