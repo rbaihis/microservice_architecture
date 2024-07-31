@@ -211,7 +211,35 @@
         - **Via Request Tokens** accept some of that state to be  coming in  as request tokens, `if user metadata` like email, roles, id
      - ==> By keeping your service stateless, then you can start many of them and `distribute loads between them`. ![](images/locationtransparency.png)
      - ---
-  - ## Asynchronous Communication (MQ):
-    - 
-    -  
+  - ### CAP Theorem and Microservices:
+    - {Consistency, Availability, Partionning} u can only have a subset of 2 element only either {C,A}{C,P},{A,P} and can't have all three.
+    - microservice is by default `Partitioned`.
+    - you need to chose between either {P,A}or{P,C}.
+    - Microservices `Favors Availability` for scaling purposes.
+    - ==> We need `to trade off Some Of the Consistency for it`, this could scare us because we don't know what the current state is right now, and also because we're used to the monolithic approach and its acid transactional databases.
+  
+    
+  - ### Asynchronous Communication (MQ):
+    - #### Why Async (MQ)
+      - **Guarantee Delivery** message queues guarantee delivery even if the receiver is unavailable now, not like sync(REST) methods.
+      - **Prevents cascading Failure between Bulkheads**:
+        - Errors will not occur on the sender's side since he will not care. `Note! the double-edged sword in ACID or aggregation cases, must consider patterns to verify.
+        - taking too long on the callee server will not impact us.
+      - **good for isolating bulkheads** The reason is in the above lines, because u know that the job u assigned  for them will be treated sooner or later or reported.
+      -  **Mindset required For Async** This calls for change in architecture, and think differently because we are most used to a naive approach async(Rest,...) approach when architecting usually and coding.
+      -  **Async vs syncResilience_Concern(REST)** Both are scary and require foreseeing and a change in mindset.
+        - in sync care in MS, such retry, circuit breaker idempotency make it scary and also produses some dependencies for the caller if a respose is critical .
+        - Async care is exactly the oposit benifi of sync in term of ready response open complete or failure or timeout , u actually don't know when the other side will do his thing.
+    - #### Mindset Of Async programming, different techniques, and change in architecture:
+      - Generating IDS, Correlation IDs, and all sorts of kungfu techniques will come into play to achieve what you usually do simply in sync-mode.
+      - **The caller should not need a response or status** This will lead to design change.
+        - **Don't Expect that changes are applied instantaneously** state/data could be in transition in a data queue and not yet processed.
+        - **Embrace/accept Event Consistency**:
+          - ask yourself what will you lose if you go Eventual Consistency, in terms of money, business, user retention, and so on.
+          - not just we need to be consistent period NO.
+          - we could find places in which you could easily recover, or find workarounds.
+          - ---
+    -  ### Event-Sourcing (eventual consistency):
+    
+    
 
