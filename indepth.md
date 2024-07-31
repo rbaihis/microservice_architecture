@@ -153,6 +153,11 @@
       - for `TimeOut Too Short` Keep above the API measured/SLA response Time above what they call maximum a bit (max it a bit or 99%th) to avoid false errors and to be safer.
       - `Tailor per Endpoint` ex longer for Export operation or functionalities with long execution time.
       - `Monitor + Alarms` monitor timeouts to see for any issues , some Apis may change their implementation and they don't notify us about it better safe then sorry.
+      - ---
+  - ### FAN-OUT & Quickest Reply
+    - is firing **multiple requests at the same time** for the `same goal` and have the fastest response win .
+    - used in mission-critical when u need a very fast response .
+    - in some domain its cheaper ()
   - ### FailFast(latency-control)--Retry(isolation)--idempotency(loose-coupling):
     - `we have call failed or timed out` what i can do ?
       - I want to **`Retry(isolation)`** :
@@ -172,7 +177,7 @@
               - **How to fix** (do strategies in your code to make it idempotent):
                 - **1-detect duplicates via pastHoursOrder ex : pastHoursOrder= Map<CustomerId,List<hash(order)>> and answer u have ordered already within an hour is this a duplicate or u want to proceed.
                 - 2-Alow the client to give you the Id, if the clients adds a unique identifier to the request and repeat it ==> you will just have UniqueKeyViolation if you try to persist the same order and good luck retrying.
-
+                - ---
     - #### Case Consider Circuit Breaker (relation with RetryIsolation & IdempotencyLooseCoupling)
       - **Via Monitoring `over the last 5min 99% request to system Failed or timed out`**
         - **Just Fail Fast**
@@ -253,8 +258,13 @@
         - Time-ordered: Events are stored in sequence.
         - Immutable: Events are permanent and unchangeable. 
 - ### Super Scalable ReadPart (CQRS):
-  - if you want to go super scalable for the Reading Part, you can use CQRS and have multiple machines consuming from that single stream of events, and suddenly you can have 10 Machines serving the searches and the reads to meet a very high scalability need, eq like google search 
-        - ---
+  - if you want to go super scalable for the Reading Part, you can use CQRS and have multiple machines consuming from that single stream of events, and suddenly you can have 10 Machines serving the searches and the reads to meet a very high scalability need, eq like google search
+  - ---
 - ### Messaging Pitfall:
-  - ok
-  - 
+  - **Poison Pill messages**: send to **Dead-letter** or **retry queue**. (messages that blow up the listener and retried at infinitum on each restart of broker)
+  - **Duplicated messages**: solution Must queue consumer be Idempotent or else a disaster and change in state occures.
+  - **Out-of-Order messages**: solution use aggregator, time-based-messages, Smart-messages, stateful aggregator ... all sort of techniques
+  - **Data Privacy**: solution claim check pattern (customer data stored in a queue for many days stuck)
+  - **Event Versionning**: solution backward-forward compatibility
+  - **broker down insufficient resources** solution Monitoring
+  - **Misconfiguration of Infrastructure**:
