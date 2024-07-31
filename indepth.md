@@ -239,7 +239,7 @@
           - not just we need to be consistent period NO.
           - we could find places in which you could easily recover, or find workarounds.
           - ---
-    -  ### Event-Sourcing (eventual consistency):
+- ### Event-Sourcing (eventual consistency):
     
     
 
