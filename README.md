@@ -44,11 +44,10 @@ I have attached my documentation for how I understand microservice it's not a ho
                   - also other services that needs that capability can `slowly migrate to the new enhanced version`
                   - `disintegration of old service` when all users/services are migrated to the new one thx to (operations and DevOps that lets us know when no one is routing to the old ms)
 ## Engineering Practices Necessary For This Architecture to Work: 
-  - ### Design for Failure:
-    -
-  - ### Monitoring:
-  - ### Aggregations Monitors:
-  - ### Synthetic Transaction:
+  - **Design for Failure**:
+  - **Monitoring**:
+  - **Aggregations Monitors**:
+  - **Synthetic Transaction**:
 
 ## Rule  of thumb:
   - It is fine to have a hybrid (mono-microservice) system, where some modules remain monolithic to minimize costs when they do not benefit significantly from being split into microservices.
